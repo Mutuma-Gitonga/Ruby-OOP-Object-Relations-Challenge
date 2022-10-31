@@ -4,14 +4,22 @@ class Article
   @@all = []
 
   def initialize(author, magazine, title)
-    @author = author.name
-    @magazine = magazine.name
+    @author = author
+    @magazine = magazine
     @title = title
     @@all << self
   end
 
   def self.all
     @@all
+  end
+
+  def author
+    @author
+  end
+
+  def magazine
+    @magazine
   end
 
 end
