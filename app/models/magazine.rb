@@ -14,10 +14,11 @@ class Magazine
   end
 
   def contributors
-    author_instances = Article.all.filter_map do |article| 
-      if(article.magazine.name == self.name)
-          article.author.name
-          Author.all.find { |author_instance|  author_instance.name == article.author.name }
+    author_instances = Article.all.filter_map.with_index do |article,index| 
+      if(Article.all[index].magazine == self.name)
+          # article.author.name
+          Article.all[index].author
+          Author.all.find { |author_instance|  author_instance.name == Article.all[index].author }
       end
     end
     author_instances.uniq
@@ -28,11 +29,11 @@ class Magazine
   end
 
   def article_titles
-    Article.all.filter.filter_map {|article| article.title if article.magazine.name == self.name}
+    Article.all.filter.filter_map.with_index {|article,index| article.title if Article.all[index].magazine == self.name}
   end
 
   def contributing_authors
-    all_magazine_authors = Article.all.filter.filter_map { |article| article.author if article.magazine.name == self.name }
+    all_magazine_authors = Article.all.filter.filter_map.with_index { |article,index| article.author if Article.all[index].magazine == self.name }
     
     authors_more_than_two_articles = all_magazine_authors.filter { |author| all_magazine_authors.count(author) > 2 }
 

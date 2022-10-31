@@ -9,8 +9,9 @@ class Author
 
   #Article instances written by this author
   def articles
-    Article.all.filter do |article| 
-      article.author.name == self.name
+    Article.all.filter.with_index do |article, index| 
+      # article.author.name == self.name
+      Article.all[index].author == self.name
     end
   end
 
@@ -28,7 +29,7 @@ class Author
   end
 
   def topic_areas
-    all_categories_contributed = self.articles.map {|article| article.magazine.category}
+    all_categories_contributed = self.articles.map {|article| article.category}
     all_categories_contributed.uniq()
   end
 
